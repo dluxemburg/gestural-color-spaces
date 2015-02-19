@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+
+%w(js rb).each do |ext|
+  Dir["demo/*.#{ext}"].each do |file|
+    basename = Pathname.new(file).basename(".#{ext}")
+    `highlight #{file} -O rtf --style edit-xcode \
+    --font Consolas --font-size 26 > rtf/#{basename}.rtf`
+  end
+end

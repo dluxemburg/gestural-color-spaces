@@ -1,11 +1,7 @@
 require 'lifx'
 
 client = LIFX::Client.lan
-label = ARGV[0]
-
-client.discover do |c|
-  c.lights.with_label(label)
-end
+client.discover
 
 while client.lights.count < 1
   sleep(1)
@@ -13,11 +9,14 @@ end
 
 client.lights.turn_on
 
-Signal.trap("INT") {
+Signal.trap("INT") do
   client.lights.set_color(LIFX::Color.rgb(0,0,0))
   client.lights.turn_off
   exit
-}
+end
+
+$stdout.write("ready")
+$stdout.flush
 
 while raw = $stdin.gets
   args = raw.split(/,| /)
@@ -28,10 +27,10 @@ while raw = $stdin.gets
   end
   args.unshift(space)
   color = LIFX::Color.send(*args)
+  # rescue block left out of
+  # presentation for brevity
   begin
-    client.lights.with_label(label).set_color(color)
+    client.lights.set_color(color)
   rescue
   end
-  $stdout.write(raw)
-  $stdout.flush
 end

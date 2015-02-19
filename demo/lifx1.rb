@@ -9,17 +9,10 @@ end
 
 client.lights.turn_on
 
-Signal.trap("INT") {
+client.lights.set_color(LIFX::Color.rgb(255,255,255))
+
+Signal.trap("INT") do
   client.lights.set_color(LIFX::Color.rgb(0,0,0))
   client.lights.turn_off
   exit
-}
-
-$stdout.write("ready")
-$stdout.flush
-
-while raw = $stdin.gets
-  numbers = raw.split(',').map(&:to_i)
-  color = LIFX::Color.rgb(*numbers)
-  client.lights.set_color(color)
 end
