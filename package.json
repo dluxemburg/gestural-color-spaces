@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "'Gestural Color Spaces' talk",
   "main": "index.js",
+  "scripts": {
+    "postinstall": "bundle install"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/dluxemburg/gestural-color-spaces.git"

@@ -8,7 +8,6 @@ while client.lights.count < 1
 end
 
 client.lights.turn_on
-
 client.lights.set_color(LIFX::Color.rgb(255,255,255))
 
 Signal.trap("INT") do
@@ -16,3 +15,5 @@ Signal.trap("INT") do
   client.lights.turn_off
   exit
 end
+
+sleep(60)

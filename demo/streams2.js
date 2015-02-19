@@ -45,21 +45,19 @@ rotate._transform = function(data, encoding, callback) {
 
 var cp = child_process
 var lights = {
-  left: cp.spawn('ruby', ['lib/ruby/lifx3.rb', 'Left']),
-  right: cp.spawn('ruby', ['lib/ruby/lifx3.rb', 'Right']),
-  center: cp.spawn('ruby', ['lib/ruby/lifx3.rb', 'Middle'])
+  left: cp.spawn('ruby', ['demo/lifx4.rb', 'Left']),
+  right: cp.spawn('ruby', ['demo/lifx4.rb', 'Right']),
+  center: cp.spawn('ruby', ['demo/lifx4.rb', 'Middle'])
 }
 
-getLeapStream()
-.pipe(skipper)
+s = getLeapStream()
 
-skipper.pipe(lights.left.stdin)
+s.pipe(skipper)
+ .pipe(lights.left.stdin)
 
-skipper.pipe(rotate)
-.pipe(lights.right.stdin)
+s.pipe(skipper).pipe(rotate)
+ .pipe(lights.center.stdin)
 
-skipper.pipe(rotate)
-.pipe(rotate)
-.pipe(lights.center.stdin)
-
-
+s.pipe(skipper)
+ .pipe(rotate).pipe(rotate)
+ .pipe(lights.right.stdin)

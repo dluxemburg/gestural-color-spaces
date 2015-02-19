@@ -1,11 +1,11 @@
 var Leap = require('leapjs'),
-    child_process= require('child_process')
+    child_process = require('child_process')
 
 var max = [0, 0, 0]
 var min = [0, 0, 0]
 
 var lifxReady = false
-var lifx = child_process.spawn('ruby', ['lib/ruby/lifx1.rb'])
+var lifx = child_process.spawn('ruby', ['demo/lifx2.rb'])
 
 lifx.stdout.on('data', function (data) {
   if (data.toString().match(/ready/)) lifxReady = true

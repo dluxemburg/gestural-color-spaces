@@ -34,5 +34,5 @@ skipper._transform = function(data, encoding, callback) {
   callback()
 }
 
-var lifx = child_process.spawn('ruby', ['lib/ruby/lifx2.rb'])
+var lifx = child_process.spawn('ruby', ['demo/lifx3.rb'])
 getLeapStream().pipe(skipper).pipe(lifx.stdin)

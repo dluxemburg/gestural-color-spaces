@@ -5,7 +5,7 @@ var max = [0, 0, 0]
 var min = [0, 0, 0]
 
 var lifxReady = false
-var lifx = child_process.spawn('ruby', ['demo/lifx2.rb'])
+var lifx = child_process.spawn('ruby', ['demo/lifx3.rb'])
 
 lifx.stdout.on('data', function (data) {
   if (data.toString().match(/ready/)) lifxReady = true
@@ -21,8 +21,10 @@ Leap.loop(function(frame){
     if (pos > max[i]) max[i] = pos
     if (pos < min[i]) min[i] = pos
   })
-  var color = spp.map(function(pos, i){
-    return Math.round((pos - min[i])/(max[i] - min[i])*255)
+  var color ='hsv '+spp.map(function(pos, i){
+    var v = (pos - min[i])/(max[i] - min[i])
+    if (i == 0) v = Math.round(v*360)
+    return v
   }).join(',')
   if (lifxReady) {
     console.log(color)
